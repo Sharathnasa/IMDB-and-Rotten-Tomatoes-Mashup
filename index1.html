@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+ 
+
+
+ <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css">
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+
+
+
+
+    <script>
+    var apikey = "6zbfqex82rdp6thagd6bc6wm";
+    var baseUrl = "http://api.rottentomatoes.com/api/public/v1.0";
+    var com="http://api.rottentomatoes.com/api/public/v1.0/movies.json?apikey=6zbfqex82rdp6thagd6bc6wm&q=Transformers";
+
+// construct the uri with our apikey
+    var moviesSearchUrl = baseUrl + '/movies.json?apikey=' + apikey;
+ 
+ 
+ $(document).ready(function(){
+$("#button1").bind("click",(function(){
+	//document.body.space.innerHTML = '';
+	var query=document.getElementById('searchTxt').value;
+	  $.ajax({
+    url: moviesSearchUrl + '&q=' + encodeURI(query),
+    dataType: "jsonp",
+    success: searchCallback
+  });
+}));
+});
+
+
+// callback for when we get back the results
+function searchCallback(data) {
+
+ // $(document.body).append('Found ' + data.total + ' results for ' + query);
+ var movies = data.movies;
+ 
+ 
+   $("#space").empty();
+ 
+ $.each(movies, function(index, movie) {
+
+
+
+   $("#space").append('<h1 id="titlee" >' + movie.title + '</h1>');
+   $("#space").append('<img src="' + movie.posters.original + '" height="300px" width="480px" class="img-thumbnail" />');
+
+
+
+
+   $("#space").append('<h4 id="yearr"><span style="color:green">Year:</span><br/> '+movie.year+'</h4>');
+    $("#space").append('<h5 id="ratings"><span style="color:green;"><b>Ratings: </span><br/>Critics -<span style="color:red">'+movie.ratings.critics_rating+'-'+movie.ratings.critics_score+'%</span><br/>Audience  -<span style="color:red">'+movie.ratings.audience_rating+'-'+movie.ratings.audience_score+'%</span>'+'</b></h5>');
+    $("#space").append('<h5 id="certificatee"><span style="color:green"><b>Movie Certificate : </span><br/>'+movie.mpaa_rating+'</b></h5>');
+    $("#space").append('<h5 id="runtimee"><span style="color:green"><b>Runtime: <br/></span>'+movie.runtime+'mins</b></h5>');
+     $("#space").append('<h5 id="critics_consensus"><span style="color:green"><b>Critics Consensus:</span><br/> '+movie.critics_consensus+'</b></h5>');
+
+	$("#space").append('<h5 id="castandcrew"><span style="color:green"><b>Cast and Crew:</span><br/> '+movie.abridged_cast[0].name +', '+movie.abridged_cast[1].name+', '+movie.abridged_cast[2].name+'</b></h5>');
+     $("#space").append('<h5 id="release_dates"><span style="color:green"><b>Release Dates:</span><br/>In Theater: '+movie.release_dates.theater+'<br/>DVR Release:'+movie.release_dates.dvd+'</b></h5>');
+     $("#space").append('<h5 id=""><span style="color:orange"><b> Click below Image for IMDB Ratings </b> </h5>');
+      $("#space").append('<form method="GET" action="imdb.html"><input type="image" src="imdblogo.jpg" width="320px" height="50px"  class="img-responsive"  id="imdbid" name="imdbid" alt="Submit"> <input type="hidden" name="imdbidd" value="'+movie.alternate_ids.imdb+'"> </form>');
+ 
+ 
+ 
+ });
+}
+
+ 
+
+    </script>
+
+<style type="text/css">
+  .bodyclass{
+      background: url() no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  }
+
+  #searchTxt{
+    opacity: 0.96;
+ 
+  }
+
+  .wrap {
+    position:relative;
+    margin:0 auto;
+               /*replace 900px with your width*/
+    width:480px;
+  }
+
+  #header{
+    width:100%;
+    float:left;
+    position: relative;
+  }
+ 
+
+
+
+#space h1 {
+  text-shadow: 0px 1px 1px #4d4d4d;
+  color: #222;
+  font: 26px 'LeagueGothicRegular';
+  }
+
+play with the code on dabblet → 
+
+</style>
+ 
+
+
+
+
+  </head>
+  <body class="bodyclass">
+ 
+  <img src="rt_logo.jpg" height="100px" width="320px">
+
+  <form>
+
+       
+     
+  <input name="searchTxt" type="text" maxlength="512" id="searchTxt" class="form-control" placeholder="Enter Movie Names" /> 
+ <input type='button' value='Search' id='button1' class="btn btn-primary btn-lg btn-block" data-loading-text="Loading..." />
+ <div id="space" class="container">
+ 	
+ </div>
+
+ 
+ </form>
+
+      
+  </body>
+</html>

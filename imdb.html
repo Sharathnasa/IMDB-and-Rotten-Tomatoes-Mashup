@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+
+
+
+  <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+  <script src="http://sites.google.com/site/ycouriel/files/imdbrating.js" type="text/javascript"> </script>
+
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css">
+
+<script>
+ 
+ //Function to go back
+function goBack()
+  {
+  window.history.back()
+  }
+ 
+
+
+
+ $(document).ready(function(){
+var idx = document.URL.indexOf('imdbidd=');
+ 
+if (idx != -1) {
+		var imdbid = "tt"+document.URL.substring(idx+8, document.URL.length).split('&');
+		 
+				}
+
+				var imdburl="http://deanclatworthy.com/imdb/?id=tt1951261";
+ 
+
+var coo="http://imdbapi.apphb.com/?i=tt1951261";
+
+
+
+ 
+
+// IMDb ID to Search
+var imdbLink = "tt1285016";
+ 
+// Send Request
+try{
+var http =new XMLHttpRequest();
+ 
+http.open("GET", "http://imdbapi.apphb.com/?i=" + imdbid, false);
+http.send(null);
+  
+// Response to JSON
+var imdbData = http.responseText;
+//alert(imdbData);
+var imdbJSON = eval("(" + imdbData + ")");
+}
+catch(oError)
+{
+	alert("Error"+oError);
+}
+// Returns Movie Title
+  // alert(imdbJSON.Title);
+ 
+ 
+ $("#imdbspace").append('<h1 id="movname"> '+imdbJSON.Title+'</h1>');
+
+$("#imdbspace").append('<img src="' + imdbJSON.Poster + '" class="img-thumbnail" width=480px />');
+$("#imdbspace").append('<h5 id="movyear"><span style="color:green"><b>Movie Year: <br/></span>'+imdbJSON.Year+'</b></h5>');
+$("#imdbspace").append('<h5 id="rating"><span style="color:green"><b>Rated: <br/></span>'+imdbJSON.Rated+'</b></h5>');
+$("#imdbspace").append('<h5 id="released"><span style="color:green"><b>Released Date: <br/></span>'+imdbJSON.Released+'</b></h5>');
+$("#imdbspace").append('<h5 id="genre"><span style="color:green"><b>Genre: <br/></span>'+imdbJSON.Genre+'</b></h5>');
+$("#imdbspace").append('<h5 id="director"><span style="color:green"><b>Director: <br/></span>'+imdbJSON.Director+'</b></h5>');
+$("#imdbspace").append('<h5 id="writer"><span style="color:green"><b>Writer: <br/></span>'+imdbJSON.Writer+'</b></h5>');
+$("#imdbspace").append('<h5 id="actors"><span style="color:green"><b>Actors: <br/></span>'+imdbJSON.Actors+'</b></h5>');
+$("#imdbspace").append('<h5 id="plot"><span style="color:green"><b>Plot: <br/></span>'+imdbJSON.Plot+'</b></h5>');
+$("#imdbspace").append('<h5 id="imdbrating"><span style="color:green"><b>IMDB Rating: <br/></span><span style="color:red">'+imdbJSON.imdbRating+'<b></span></h5>');
+$("#imdbspace").append('<h5 id="imdbvotes"><span style="color:green"><b>IMDB Votes: <br/></span>'+imdbJSON.imdbVotes+'<b/></h5>');
+
+});
+
+/*
+function getParams(){
+var idx = document.URL.indexOf('imdbidd=');
+
+if (idx != -1) {
+		var imdbid = "tt"+document.URL.substring(idx+8, document.URL.length).split('&');
+		
+				}
+				var imdburl="http://deanclatworthy.com/imdb/?id="+imdbid;
+				alert(imdburl);
+	  $.ajax({
+	  url: imdburl,
+    dataType: "jsonp",
+    success: searchCallback
+  });
+}
+
+function searchCallback1(data){
+	alert("Here");
+var movies = data.rating;
+alert(movies);
+}*/
+ 
+ 
+</script>
+<style type="text/css">
+	
+	#imdbspace h1 {
+  text-shadow: 0px 1px 1px #4d4d4d;
+  color: #222;
+  font: 26px 'LeagueGothicRegular';
+  }
+</style>
+ 
+</head>
+<body>
+ 
+ <img src="imdblogo.jpg" height="100px" width="320px">
+ <div id="imdbspace" class="container">
+ 
+ </div>
+ <input type="button" value="Back" onclick="goBack()" class="btn btn-primary btn-lg btn-block"/>
+ 
+
+</body>
+</html>
